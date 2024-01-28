@@ -9,6 +9,39 @@ export type Json =
 export interface Database {
   public: {
     Tables: {
+      Activites: {
+        Row: {
+          address: string | null
+          created_at: string
+          description: string
+          do_date: string | null
+          done: boolean
+          id: string
+          image_path: string | null
+          title: string
+        }
+        Insert: {
+          address?: string | null
+          created_at?: string
+          description: string
+          do_date?: string | null
+          done?: boolean
+          id?: string
+          image_path?: string | null
+          title: string
+        }
+        Update: {
+          address?: string | null
+          created_at?: string
+          description?: string
+          do_date?: string | null
+          done?: boolean
+          id?: string
+          image_path?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       Profiles: {
         Row: {
           created_at: string
@@ -28,6 +61,93 @@ export interface Database {
             columns: ["id"]
             isOneToOne: true
             referencedRelation: "users"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      Trips: {
+        Row: {
+          created_at: string
+          description: string | null
+          destination_name: string
+          end_date: string | null
+          id: number
+          start_date: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          destination_name: string
+          end_date?: string | null
+          id?: number
+          start_date: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          destination_name?: string
+          end_date?: string | null
+          id?: number
+          start_date?: string
+        }
+        Relationships: []
+      }
+      trips_activites: {
+        Row: {
+          activity: string
+          trip: number
+        }
+        Insert: {
+          activity: string
+          trip: number
+        }
+        Update: {
+          activity?: string
+          trip?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trips_activites_activity_fkey"
+            columns: ["activity"]
+            isOneToOne: false
+            referencedRelation: "Activites"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trips_activites_trip_fkey"
+            columns: ["trip"]
+            isOneToOne: false
+            referencedRelation: "Trips"
+            referencedColumns: ["id"]
+          }
+        ]
+      }
+      trips_profiles: {
+        Row: {
+          profile_id: string
+          trip_id: number
+        }
+        Insert: {
+          profile_id: string
+          trip_id: number
+        }
+        Update: {
+          profile_id?: string
+          trip_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "trips_profiles_profile_id_fkey"
+            columns: ["profile_id"]
+            isOneToOne: false
+            referencedRelation: "Profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "trips_profiles_trip_id_fkey"
+            columns: ["trip_id"]
+            isOneToOne: false
+            referencedRelation: "Trips"
             referencedColumns: ["id"]
           }
         ]
