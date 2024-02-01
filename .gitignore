@@ -15,6 +15,7 @@
 
 # environemt variables
 .env.*.local
+.env
 
 # production
 /build
