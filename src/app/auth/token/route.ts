@@ -13,11 +13,12 @@ export async function GET(request: Request) {
     const supabase = getSupabaseClient(cookieStore);
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
+
     if (!error) {
       return NextResponse.redirect(`${origin}${next}`);
     }
   }
 
   // return the user to an error page with instructions
-  return NextResponse.redirect(`${origin}/auth/auth-code-error`);
+  return NextResponse.redirect(`${origin}`);
 }

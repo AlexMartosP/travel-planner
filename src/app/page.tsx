@@ -1,47 +1,46 @@
-import { Button } from "@/components/Button";
+import { Toolbar } from "@/components/Toolbar";
 import { getSupabaseClient } from "@/db/client";
+import { Database } from "@/db/types";
+import { PostgrestResponse } from "@supabase/supabase-js";
+import { ArrowRight } from "lucide-react";
 import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import Link from "next/link";
 
 export default async function Home() {
-  async function handleLogin() {
-    "use server";
-    const supabase = getSupabaseClient(cookies());
-
-    const { data } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: "http://localhost:3001/auth/token",
-        scopes: "email profile",
-      },
-    });
-
-    return redirect(data.url!);
-  }
-
-  async function signOut() {
-    "use server";
-    const supabase = getSupabaseClient(cookies());
-
-    const { error } = await supabase.auth.signOut();
-
-    if (!error) {
-      // Redirect here
-    }
-  }
-
   const supabase = getSupabaseClient(cookies());
+
   const { data, error } = await supabase.auth.getUser();
+  const trips: PostgrestResponse<Database["public"]["Tables"]["Trips"]["Row"]> =
+    await supabase
+      .from("Trips")
+      .select("*, Profiles!inner()")
+      .eq("Profiles.id", data.user?.id);
+
+  console.log(trips);
 
   return (
-    <div>
-      <Button onClick={handleLogin}>Sign in with google</Button>
-      <Button onClick={signOut}>Sign out</Button>
+    <div className="grid place-items-center w-screen h-screen">
       <div>
-        User:
-        <div>{data.user?.email}</div>
-        <div>{data.user?.user_metadata.avatar_url}</div>
+        <h1>Welcome back, {data.user?.user_metadata.full_name}!</h1>
+        <div className="mt-8">
+          {trips.data?.map((trip) => (
+            <Link
+              href={`/${trip.id}`}
+              key={trip.id}
+              className="group flex justify-between items-center"
+            >
+              <div className="underline underline-offset-2 decoration-slate-300 group-hover:decoration-slate-500 transition">
+                {trip.destination_name}
+              </div>
+              <div className="group-hover:translate-x-1 transition-transform">
+                <ArrowRight />
+              </div>
+            </Link>
+          ))}
+        </div>
       </div>
+
+      <Toolbar />
     </div>
   );
 }

@@ -1,7 +1,10 @@
 import { createServerClient } from "@supabase/ssr";
+import { RequestCookies } from "next/dist/compiled/@edge-runtime/cookies";
 import { cookies } from "next/headers";
 
-export const getSupabaseClient = (cookieStore: ReturnType<typeof cookies>) => {
+export const getSupabaseClient = (
+  cookieStore: ReturnType<typeof cookies> | RequestCookies
+) => {
   return createServerClient(process.env.DB_API_URL!, process.env.DB_KEY!, {
     cookies: {
       get(name: string) {
