@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "db:start": "supabase start",
-    "db:seed": "",
+    "db:generate-seed": "npx tsx seed.mts > supabase/seed.sql",
     "db:generate-types": "sh ./scripts/generateDbTypes.sh",
     "db:stop": "supabase stop"
   },
