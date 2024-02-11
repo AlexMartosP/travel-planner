@@ -1,4 +1,9 @@
 "use client";
+
+const colors = {
+  primary: "px"
+}
+
 export function Button({
   onClick,
   children,

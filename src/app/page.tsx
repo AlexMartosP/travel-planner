@@ -9,6 +9,7 @@ import Link from "next/link";
 export default async function Home() {
   const supabase = getSupabaseClient(cookies());
 
+  console.log("Getting user");
   const { data, error } = await supabase.auth.getUser();
   const trips: PostgrestResponse<Database["public"]["Tables"]["Trips"]["Row"]> =
     await supabase
