@@ -1,11 +1,11 @@
 "use server";
 
-import { getSupabaseClient } from "@/db/client";
+import { createSupabaseClient } from "@/db/client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function loginWithGoogle() {
-  const supabase = getSupabaseClient(cookies());
+  const supabase = createSupabaseClient(cookies());
 
   const { data } = await supabase.auth.signInWithOAuth({
     provider: "google",
@@ -19,7 +19,7 @@ export async function loginWithGoogle() {
 }
 
 export async function signOut() {
-  const supabase = getSupabaseClient(cookies());
+  const supabase = createSupabaseClient(cookies());
 
   const { error } = await supabase.auth.signOut();
 

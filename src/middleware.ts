@@ -53,25 +53,25 @@ export async function middleware(request: NextRequest) {
       },
     }
   );
-  const { data, error } = await supabase.auth.getSession();
+  const { data, error } = await supabase.auth.getUser();
 
   if (error) {
     await supabase.auth.signOut();
-
-    return;
   }
 
   if (request.nextUrl.pathname === "/login") {
-    if (data.session) {
+    if (data.user) {
       return NextResponse.redirect(new URL("/", request.url));
     } else {
-      return;
+      return response;
     }
   }
 
-  if (!data.session) {
+  if (!data.user) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
+
+  return response;
 }
 
 export const config = {

@@ -1,29 +1,26 @@
-import { Toolbar } from "@/components/Toolbar";
-import { getSupabaseClient } from "@/db/client";
-import { Database } from "@/db/types";
-import { PostgrestResponse } from "@supabase/supabase-js";
-import { ArrowRight } from "lucide-react";
+import { SignoutButton } from "@/app/SignoutButton";
+import { Button } from "@/components/ui/Button";
+import { createSupabaseClient } from "@/db/client";
+import { differenceInDays } from "date-fns";
+import { PlusIcon } from "lucide-react";
 import { cookies } from "next/headers";
 import Link from "next/link";
 
 export default async function Home() {
-  const supabase = getSupabaseClient(cookies());
+  const supabase = createSupabaseClient(cookies());
 
-  console.log("Getting user");
   const { data, error } = await supabase.auth.getUser();
-  const trips: PostgrestResponse<Database["public"]["Tables"]["Trips"]["Row"]> =
-    await supabase
-      .from("Trips")
-      .select("*, Profiles!inner()")
-      .eq("Profiles.id", data.user?.id);
-
-  console.log(trips);
+  const trips = await supabase
+    .from("Trips")
+    .select("*, Profiles!inner()")
+    .eq("Profiles.id", data.user!.id);
 
   return (
-    <div className="grid place-items-center w-screen h-screen">
+    <div className="pt-32">
       <div>
         <h1>Welcome back, {data.user?.user_metadata.full_name}!</h1>
-        <div className="mt-8">
+        <SignoutButton />
+        <div className="mt-12">
           {trips.data?.map((trip) => (
             <Link
               href={`/${trip.id}`}
@@ -33,15 +30,39 @@ export default async function Home() {
               <div className="underline underline-offset-2 decoration-slate-300 group-hover:decoration-slate-500 transition">
                 {trip.destination_name}
               </div>
-              <div className="group-hover:translate-x-1 transition-transform">
-                <ArrowRight />
-              </div>
+              <span className="text-sm text-slate-500">
+                <span className="font-medium">
+                  {getDaysUntilTakeOff(
+                    differenceInDays(trip.start_date, new Date())
+                  )}{" "}
+                </span>
+                until takeoff
+              </span>
             </Link>
           ))}
+          <Button
+            variant="ghost"
+            size="sm"
+            className="mt-2 flex justify-center items-center gap-2"
+            fullwidth
+          >
+            <PlusIcon width={18} />
+            <span className="text-sm">Add new trip</span>
+          </Button>
         </div>
       </div>
-
-      <Toolbar />
     </div>
   );
+}
+
+function getDaysUntilTakeOff(difference: number) {
+  if (difference === 0) {
+    return "Today";
+  }
+
+  if (difference === 1) {
+    return "Tomorrow";
+  }
+
+  return `${difference} days`;
 }

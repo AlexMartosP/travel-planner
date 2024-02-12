@@ -7,19 +7,24 @@
     "build": "next build",
     "start": "next start -p 3000",
     "lint": "next lint",
+    "setup": "ts-node ./scripts/createStorageBucket.ts",
     "db:start": "supabase start",
     "db:generate-seed": "npx tsx seed.mts > supabase/seed.sql",
     "db:generate-types": "sh ./scripts/generateDbTypes.sh",
     "db:stop": "supabase stop"
   },
   "dependencies": {
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
     "@supabase/auth-helpers-nextjs": "^0.9.0",
     "@supabase/ssr": "^0.0.10",
     "@supabase/supabase-js": "^2.39.3",
+    "date-fns": "^3.3.1",
     "lucide-react": "^0.323.0",
     "next": "14.1.0",
     "react": "^18",
     "react-dom": "^18",
+    "tailwind-merge": "^2.2.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {
@@ -35,6 +40,7 @@
     "postcss": "^8",
     "snaplet": "^0.84.0",
     "tailwindcss": "^3.3.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5"
   }
 }

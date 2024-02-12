@@ -10,6 +10,10 @@ h1 {
   @apply text-xl font-medium
 }
 
-*:focus {
-  @apply outline-dashed outline-offset-2 outline-slate-600 rounded-md
-}
+/* *:focus {
+  @apply outline-dashed outline-offset-2 outline-slate-600
+} */
+
+/* * {
+  outline: 1px solid red;
+} */

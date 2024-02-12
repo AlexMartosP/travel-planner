@@ -16,7 +16,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <div className="grid justify-items-center h-screen">
+          <div className="w-full max-w-[500px] px-8 ">{children}</div>
+        </div>
+      </body>
     </html>
   );
 }
