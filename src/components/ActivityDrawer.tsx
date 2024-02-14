@@ -16,8 +16,8 @@ export function ActivityDrawer({
   open,
   onClose,
 }: {
-  tripId: number;
-  activity?: Tables<"Activites">;
+  tripId: string;
+  activity?: Tables<"activites">;
   activityImageUrl?: string;
   open: boolean;
   onClose: () => void;
@@ -127,7 +127,7 @@ export function ActivityDrawer({
         <Textarea
           label="Description*"
           name="description"
-          defaultValue={activity?.description}
+          defaultValue={activity?.description || undefined}
         />
       </form>
     </Drawer>

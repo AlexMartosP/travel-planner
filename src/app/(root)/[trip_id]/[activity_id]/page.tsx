@@ -7,6 +7,7 @@ import { createSupabaseClient } from "@/db/client";
 import { formateDate } from "@/utils/formaters";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { notFound } from "next/navigation";
 
 export default async function ActivityPage({
   params,
@@ -17,20 +18,24 @@ export default async function ActivityPage({
 
   // Promise.all
   const trip = await supabase
-    .from("Trips")
+    .from("trips")
     .select("destination_name, id")
     .eq("id", params.trip_id)
     .single();
+  console.log(trip);
   const activity = await supabase
-    .from("Activites")
+    .from("activites")
     .select("*")
     .eq("id", params.activity_id)
     .single();
 
-  const notFound = trip.status === 404 || activity.status === 404;
-
-  if (notFound || !trip.data || !activity.data) {
-    return <div>Not found</div>;
+  if (
+    trip.status === 404 ||
+    activity.status === 404 ||
+    !trip.data ||
+    !activity.data
+  ) {
+    return notFound();
   }
 
   const imageUrl =
@@ -68,7 +73,6 @@ export default async function ActivityPage({
         )}
       </div>
       <h1 className="mt-2">{activity.data.title}</h1>
-
       <div className="flex gap-2 items-center">
         <span className="text-sm text-slate-500">
           {activity.data.do_date

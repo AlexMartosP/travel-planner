@@ -9,8 +9,8 @@ export function ActivityItem({
   tripId,
   activity,
 }: {
-  tripId: number;
-  activity: Tables<"Activites">;
+  tripId: string;
+  activity: Tables<"activites">;
 }) {
   const imageUrl =
     activity.image_path &&

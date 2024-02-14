@@ -2,6 +2,7 @@ import { twMerge } from "tailwind-merge";
 
 const variantStyles = {
   emergency: "bg-red-300",
+  success: "bg-green-200",
 };
 
 export function Alert({

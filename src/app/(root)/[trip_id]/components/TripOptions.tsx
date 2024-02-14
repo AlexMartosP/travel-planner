@@ -1,14 +1,14 @@
 "use client";
 
+import { DeleteTripDialog } from "@/app/(root)/[trip_id]/components/DeleteTripDialog";
+import { InvitationDialog } from "@/app/(root)/[trip_id]/components/InvitationDialog";
 import { TripDialog } from "@/components/TripDialog";
-import { Dialog } from "@/components/ui/Dialog";
-import { Input } from "@/components/ui/Input";
 import { Tables } from "@/db/types";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useState } from "react";
 
-export function TripOptions({ trip }: { trip: Tables<"Trips"> }) {
+export function TripOptions({ trip }: { trip: Tables<"trips"> }) {
   const [openDialog, setOpenDialog] = useState<
     "invite" | "edit" | "delete" | null
   >(null);
@@ -42,35 +42,22 @@ export function TripOptions({ trip }: { trip: Tables<"Trips"> }) {
           </DropdownMenu.Content>
         </DropdownMenu.Portal>
       </DropdownMenu.Root>
-      <Dialog
-        title="Invite traveler"
+      <InvitationDialog
+        tripId={trip.id}
         open={openDialog === "invite"}
-        buttonLabel="Invite"
         onClose={() => setOpenDialog(null)}
-        loading={false}
-        formId="invite_form"
-      >
-        <form id="invite_form">
-          <Input label="Email*" type="email" name="email" required />
-        </form>
-      </Dialog>
+      />
       <TripDialog
         trip={trip}
         open={openDialog === "edit"}
         onClose={() => setOpenDialog(null)}
-        loading={false}
-        action={() => {}}
       />
 
-      <Dialog
-        title="Delete trip"
+      <DeleteTripDialog
+        trip={trip}
         open={openDialog === "delete"}
-        buttonLabel="Delete"
         onClose={() => setOpenDialog(null)}
-        loading={false}
-      >
-        <span>Are you sure you want to delete {trip.destination_name}?</span>
-      </Dialog>
+      />
     </>
   );
 }

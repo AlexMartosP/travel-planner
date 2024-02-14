@@ -21,7 +21,7 @@ await snaplet.$resetDatabase();
 await snaplet.users(
   (x) =>
     x(6, (index) => ({
-      Profiles: [
+      profiles: [
         {
           email: ({ $store }) => $store.users![index].email!,
           first_name: ({ seed }) => copycat.firstName(seed),
@@ -33,38 +33,38 @@ await snaplet.users(
   { connect: true }
 );
 
-const tripsStore = await snaplet.Trips([
+const tripsStore = await snaplet.trips([
   {
     destination_name: "Barcelona",
     description: "Visit the famous basilica",
     trips_profiles: [
-      { profile_id: snaplet.$store.Profiles![0].id },
-      { profile_id: snaplet.$store.Profiles![1].id },
+      { profile_id: snaplet.$store.profiles![0].id },
+      { profile_id: snaplet.$store.profiles![1].id },
     ],
   },
   {
     destination_name: "Paris",
     description: "Iconic landmark with stunning views",
     trips_profiles: [
-      { profile_id: snaplet.$store.Profiles![0].id },
-      { profile_id: snaplet.$store.Profiles![2].id },
+      { profile_id: snaplet.$store.profiles![0].id },
+      { profile_id: snaplet.$store.profiles![2].id },
     ],
   },
   {
     destination_name: "Amsterdam",
     description: "Art museum dedicated to Vincent van Gogh",
-    trips_profiles: [{ profile_id: snaplet.$store.Profiles![1].id }],
+    trips_profiles: [{ profile_id: snaplet.$store.profiles![1].id }],
   },
 ]);
 
-await snaplet.Activites([
+await snaplet.activites([
   {
     title: "Sagrada Familia",
     description: "Visit the famous basilica",
     address: "Carrer de Mallorca, 401, 08013 Barcelona, Spain",
     image_path: "segrada_familia.jpg",
     done: ({ seed }) => copycat.bool(seed),
-    trips_activites: [{ trip: tripsStore.Trips![0].id }],
+    trip_id: tripsStore.trips![0].id,
   },
   {
     title: "Park Güell",
@@ -72,7 +72,7 @@ await snaplet.Activites([
     address: "08024 Barcelona, Spain",
     image_path: "park_guell.jpg",
     done: ({ seed }) => copycat.bool(seed),
-    trips_activites: [{ trip: tripsStore.Trips![0].id }],
+    trip_id: tripsStore.trips![0].id,
   },
   {
     title: "Eiffel Tower",
@@ -80,7 +80,7 @@ await snaplet.Activites([
     address: "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France",
     image_path: "eiffel_tower.jpg",
     done: ({ seed }) => copycat.bool(seed),
-    trips_activites: [{ trip: tripsStore.Trips![1].id }],
+    trip_id: tripsStore.trips![1].id,
   },
   {
     title: "Louvre Museum",
@@ -88,7 +88,7 @@ await snaplet.Activites([
     address: "Rue de Rivoli, 75001 Paris, France",
     image_path: "louvre_museum.jpg",
     done: ({ seed }) => copycat.bool(seed),
-    trips_activites: [{ trip: tripsStore.Trips![1].id }],
+    trip_id: tripsStore.trips![1].id,
   },
   {
     title: "Van Gogh Museum",
@@ -96,7 +96,7 @@ await snaplet.Activites([
     address: "Museumplein 6, 1071 DJ Amsterdam, Netherlands",
     image_path: "van_gogh_museum.jpg",
     done: ({ seed }) => copycat.bool(seed),
-    trips_activites: [{ trip: tripsStore.Trips![2].id }],
+    trip_id: tripsStore.trips![2].id,
   },
   {
     title: "Anne Frank House",
@@ -104,6 +104,6 @@ await snaplet.Activites([
     address: "Prinsengracht 263-267, 1016 GV Amsterdam, Netherlands",
     image_path: "anne_frank_house.jpg",
     done: ({ seed }) => copycat.bool(seed),
-    trips_activites: [{ trip: tripsStore.Trips![2].id }],
+    trip_id: tripsStore.trips![2].id,
   },
 ]);

@@ -5,6 +5,7 @@ import { TResponse } from "@/types/response";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
 import { z } from "zod";
+import { revalidatePath } from "next/cache";
 
 const tripSchema = z.object({
   destination_name: z.string().min(1),
@@ -54,12 +55,12 @@ export async function addTrip(
   }
 
   const { data: insertedTrip, error: insertError } = await supabase
-    .from("Trips")
+    .from("trips")
     .insert(fields.data)
-    .select();
+    .select()
+    .single();
 
   if (insertError) {
-    console.log(insertError);
     return {
       status: "error",
       error: {
@@ -72,7 +73,7 @@ export async function addTrip(
   const { error: insertRelationError } = await supabase
     .from("trips_profiles")
     .insert({
-      trip_id: insertedTrip[0].id,
+      trip_id: insertedTrip.id,
       profile_id: user.id,
     });
 
@@ -86,5 +87,72 @@ export async function addTrip(
     };
   }
 
-  redirect(`/${insertedTrip[0].id}`);
+  redirect(`/${insertedTrip.id}`);
+}
+
+export async function updateTrip(
+  tripId: string,
+  formData: FormData
+): Promise<TResponse> {
+  const fields = tripSchema.safeParse({
+    destination_name: formData.get("destination_name"),
+    description: formData.get("description"),
+    start_date: formData.get("start_date"),
+    end_date: formData.get("end_date") || null,
+  });
+
+  if (!fields.success) {
+    return {
+      status: "error",
+      error: {
+        key: "VALIDATION_ERROR",
+        fields: fields.error.flatten().fieldErrors,
+      },
+    };
+  }
+
+  const supabase = createSupabaseClient(cookies());
+
+  const { error: insertError } = await supabase
+    .from("trips")
+    .update(fields.data)
+    .eq("id", tripId);
+
+  if (insertError) {
+    return {
+      status: "error",
+      error: {
+        key: "MUTATION_ERROR",
+        message: "Could not update trip",
+      },
+    };
+  }
+
+  revalidatePath(`/${tripId}`);
+
+  return {
+    status: "success",
+  };
+}
+
+export async function deleteTrip(tripId: string): Promise<TResponse> {
+  const supabase = createSupabaseClient(cookies());
+
+  const { status } = await supabase.from("trips").delete().eq("id", tripId);
+
+  if (status === 204) {
+    redirect(`/`);
+
+    return {
+      status: "success",
+    };
+  }
+
+  return {
+    status: "error",
+    error: {
+      key: "MUTATION_ERROR",
+      message: "Could not delete trip",
+    },
+  };
 }

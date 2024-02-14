@@ -34,7 +34,6 @@ export function AddTrip() {
         title="Add trip"
         loading={false}
         formId="form"
-        useFormStatus
         error={hasError ? { title: "Could not add trip" } : undefined}
         buttonLabel="Add"
         open={isOpen}

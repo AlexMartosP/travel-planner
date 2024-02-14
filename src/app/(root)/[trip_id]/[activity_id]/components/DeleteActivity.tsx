@@ -11,7 +11,7 @@ export function DeleteActivity({
   activity,
   tripId,
 }: {
-  activity: Tables<"Activites">;
+  activity: Tables<"activites">;
   tripId: number;
 }) {
   const [isOpen, setIsOpen] = useState(false);

@@ -14,45 +14,6 @@ type Inflection = {
   oppositeBaseNameMap?: Record<string, string>;
 };
 type Override = {
-  Activites?: {
-    name?: string;
-    fields?: {
-      id?: string;
-      created_at?: string;
-      title?: string;
-      description?: string;
-      do_date?: string;
-      done?: string;
-      address?: string;
-      image_path?: string;
-      trips_activites?: string;
-    };
-  }
-  Profiles?: {
-    name?: string;
-    fields?: {
-      id?: string;
-      created_at?: string;
-      email?: string;
-      first_name?: string;
-      last_name?: string;
-      users?: string;
-      trips_profiles?: string;
-    };
-  }
-  Trips?: {
-    name?: string;
-    fields?: {
-      id?: string;
-      created_at?: string;
-      destination_name?: string;
-      start_date?: string;
-      end_date?: string;
-      description?: string;
-      trips_activites?: string;
-      trips_profiles?: string;
-    };
-  }
   _http_response?: {
     name?: string;
     fields?: {
@@ -64,6 +25,21 @@ type Override = {
       timed_out?: string;
       error_msg?: string;
       created?: string;
+    };
+  }
+  activites?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      created_at?: string;
+      title?: string;
+      description?: string;
+      do_date?: string;
+      done?: string;
+      address?: string;
+      image_path?: string;
+      trip_id?: string;
+      trips?: string;
     };
   }
   audit_log_entries?: {
@@ -155,6 +131,18 @@ type Override = {
       updated_at?: string;
     };
   }
+  invitations?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      created_at?: string;
+      invitee_email?: string;
+      trip_id?: string;
+      has_expired?: string;
+      profiles?: string;
+      trips?: string;
+    };
+  }
   key?: {
     name?: string;
     fields?: {
@@ -175,6 +163,87 @@ type Override = {
       key?: string;
       key?: string;
       secrets?: string;
+    };
+  }
+  log_events_33a0d901_2919_4c7f_a930_fb6509ffb4f0?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_49fd7740_5f0e_4d76_a111_bec2cb816f4f?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_5b145942_4e9c_4ee9_b332_95090d1f7f54?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_9e4c6565_557f_45d8_9299_0f232605fc04?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_a6ca264b_1d32_4e92_b968_f0ced16dd8d1?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_ac0567f5_a9e1_4bd6_923c_8a08cea798d6?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_b58f6986_7002_4caf_81ba_7698812e07ca?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_c102699a_b4c2_49b6_b3da_f2c083e7ff2e?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
+    };
+  }
+  log_events_f64970ad_5f71_4ace_bca7_bebd82ed2dd1?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      body?: string;
+      event_message?: string;
+      timestamp?: string;
     };
   }
   mfa_amr_claims?: {
@@ -247,6 +316,20 @@ type Override = {
       buckets?: string;
     };
   }
+  profiles?: {
+    name?: string;
+    fields?: {
+      id?: string;
+      created_at?: string;
+      email?: string;
+      first_name?: string;
+      last_name?: string;
+      full_name?: string;
+      users?: string;
+      invitations?: string;
+      trips_profiles?: string;
+    };
+  }
   refresh_tokens?: {
     name?: string;
     fields?: {
@@ -306,6 +389,69 @@ type Override = {
       name?: string;
     };
   }
+  schema_migrations_33a0d901_2919_4c7f_a930_fb6509ffb4f0?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_49fd7740_5f0e_4d76_a111_bec2cb816f4f?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_5b145942_4e9c_4ee9_b332_95090d1f7f54?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_9e4c6565_557f_45d8_9299_0f232605fc04?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_a6ca264b_1d32_4e92_b968_f0ced16dd8d1?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_ac0567f5_a9e1_4bd6_923c_8a08cea798d6?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_b58f6986_7002_4caf_81ba_7698812e07ca?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_c102699a_b4c2_49b6_b3da_f2c083e7ff2e?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
+  schema_migrations_f64970ad_5f71_4ace_bca7_bebd82ed2dd1?: {
+    name?: string;
+    fields?: {
+      version?: string;
+      inserted_at?: string;
+    };
+  }
   secrets?: {
     name?: string;
     fields?: {
@@ -362,13 +508,18 @@ type Override = {
       sso_domains?: string;
     };
   }
-  trips_activites?: {
+  trips?: {
     name?: string;
     fields?: {
-      trip?: string;
-      activity?: string;
-      Activites?: string;
-      Trips?: string;
+      id?: string;
+      created_at?: string;
+      destination_name?: string;
+      start_date?: string;
+      end_date?: string;
+      description?: string;
+      activites?: string;
+      invitations?: string;
+      trips_profiles?: string;
     };
   }
   trips_profiles?: {
@@ -376,8 +527,8 @@ type Override = {
     fields?: {
       trip_id?: string;
       profile_id?: string;
-      Profiles?: string;
-      Trips?: string;
+      profiles?: string;
+      trips?: string;
     };
   }
   users?: {
@@ -420,7 +571,7 @@ type Override = {
       identities?: string;
       mfa_factors?: string;
       sessions?: string;
-      Profiles?: string;
+      profiles?: string;
     };
   }}
 export type Alias = {
@@ -446,29 +597,16 @@ interface FingerprintNumberField {
   }
 }
 export interface Fingerprint {
-  Activites?: {
-    created_at?: FingerprintDateField;
-    do_date?: FingerprintDateField;
-    trips_activites?: FingerprintRelationField;
-  }
-  Profiles?: {
-    created_at?: FingerprintDateField;
-    users?: FingerprintRelationField;
-    trips_profiles?: FingerprintRelationField;
-  }
-  Trips?: {
-    id?: FingerprintNumberField;
-    created_at?: FingerprintDateField;
-    start_date?: FingerprintDateField;
-    end_date?: FingerprintDateField;
-    trips_activites?: FingerprintRelationField;
-    trips_profiles?: FingerprintRelationField;
-  }
   _http_response?: {
     id?: FingerprintNumberField;
     status_code?: FingerprintNumberField;
     headers?: FingerprintJsonField;
     created?: FingerprintDateField;
+  }
+  activites?: {
+    created_at?: FingerprintDateField;
+    do_date?: FingerprintDateField;
+    trips?: FingerprintRelationField;
   }
   audit_log_entries?: {
     payload?: FingerprintJsonField;
@@ -507,6 +645,11 @@ export interface Fingerprint {
     created_at?: FingerprintDateField;
     updated_at?: FingerprintDateField;
   }
+  invitations?: {
+    created_at?: FingerprintDateField;
+    profiles?: FingerprintRelationField;
+    trips?: FingerprintRelationField;
+  }
   key?: {
     created?: FingerprintDateField;
     expires?: FingerprintDateField;
@@ -514,6 +657,42 @@ export interface Fingerprint {
     key?: FingerprintRelationField;
     key?: FingerprintRelationField;
     secrets?: FingerprintRelationField;
+  }
+  log_events_33a0d901_2919_4c7f_a930_fb6509ffb4f0?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_49fd7740_5f0e_4d76_a111_bec2cb816f4f?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_5b145942_4e9c_4ee9_b332_95090d1f7f54?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_9e4c6565_557f_45d8_9299_0f232605fc04?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_a6ca264b_1d32_4e92_b968_f0ced16dd8d1?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_ac0567f5_a9e1_4bd6_923c_8a08cea798d6?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_b58f6986_7002_4caf_81ba_7698812e07ca?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_c102699a_b4c2_49b6_b3da_f2c083e7ff2e?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
+  }
+  log_events_f64970ad_5f71_4ace_bca7_bebd82ed2dd1?: {
+    body?: FingerprintJsonField;
+    timestamp?: FingerprintDateField;
   }
   mfa_amr_claims?: {
     created_at?: FingerprintDateField;
@@ -545,6 +724,12 @@ export interface Fingerprint {
     metadata?: FingerprintJsonField;
     buckets?: FingerprintRelationField;
   }
+  profiles?: {
+    created_at?: FingerprintDateField;
+    users?: FingerprintRelationField;
+    invitations?: FingerprintRelationField;
+    trips_profiles?: FingerprintRelationField;
+  }
   refresh_tokens?: {
     id?: FingerprintNumberField;
     created_at?: FingerprintDateField;
@@ -568,6 +753,42 @@ export interface Fingerprint {
   }
   supabase_migrations_schema_migrations?: {
 
+  }
+  schema_migrations_33a0d901_2919_4c7f_a930_fb6509ffb4f0?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_49fd7740_5f0e_4d76_a111_bec2cb816f4f?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_5b145942_4e9c_4ee9_b332_95090d1f7f54?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_9e4c6565_557f_45d8_9299_0f232605fc04?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_a6ca264b_1d32_4e92_b968_f0ced16dd8d1?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_ac0567f5_a9e1_4bd6_923c_8a08cea798d6?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_b58f6986_7002_4caf_81ba_7698812e07ca?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_c102699a_b4c2_49b6_b3da_f2c083e7ff2e?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
+  }
+  schema_migrations_f64970ad_5f71_4ace_bca7_bebd82ed2dd1?: {
+    version?: FingerprintNumberField;
+    inserted_at?: FingerprintDateField;
   }
   secrets?: {
     created_at?: FingerprintDateField;
@@ -595,15 +816,17 @@ export interface Fingerprint {
     saml_relay_states?: FingerprintRelationField;
     sso_domains?: FingerprintRelationField;
   }
-  trips_activites?: {
-    trip?: FingerprintNumberField;
-    Activites?: FingerprintRelationField;
-    Trips?: FingerprintRelationField;
+  trips?: {
+    created_at?: FingerprintDateField;
+    start_date?: FingerprintDateField;
+    end_date?: FingerprintDateField;
+    activites?: FingerprintRelationField;
+    invitations?: FingerprintRelationField;
+    trips_profiles?: FingerprintRelationField;
   }
   trips_profiles?: {
-    trip_id?: FingerprintNumberField;
-    Profiles?: FingerprintRelationField;
-    Trips?: FingerprintRelationField;
+    profiles?: FingerprintRelationField;
+    trips?: FingerprintRelationField;
   }
   users?: {
     email_confirmed_at?: FingerprintDateField;
@@ -626,5 +849,5 @@ export interface Fingerprint {
     identities?: FingerprintRelationField;
     mfa_factors?: FingerprintRelationField;
     sessions?: FingerprintRelationField;
-    Profiles?: FingerprintRelationField;
+    profiles?: FingerprintRelationField;
   }}

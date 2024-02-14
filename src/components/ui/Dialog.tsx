@@ -2,7 +2,6 @@ import { Alert } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import * as RadixDialog from "@radix-ui/react-dialog";
 import { XIcon } from "lucide-react";
-import { useFormStatus } from "react-dom";
 
 export function Dialog({
   title,
@@ -13,7 +12,6 @@ export function Dialog({
   formId,
   buttonLabel,
   loading,
-  useFormStatus,
   onButtonClick,
   onClose,
 }: {
@@ -25,9 +23,8 @@ export function Dialog({
     description?: string;
   };
   loading: boolean;
-  buttonLabel: string;
+  buttonLabel?: string;
   formId?: string;
-  useFormStatus?: boolean;
   onButtonClick?: () => void;
   open: boolean;
   onClose: () => void;
@@ -51,47 +48,31 @@ export function Dialog({
             </RadixDialog.Description>
           </div>
           <div className="my-4 px-4">{children}</div>
-          <div className="sticky bottom-0 left-0 right-0 bg-white border-t z-10 rounded-b-md">
-            <div className="px-4 py-2 grid gap-3">
-              {error && error.title && (
-                <Alert title={error.title} variant="emergency">
-                  {error.description}
-                </Alert>
-              )}
-              <div className="flex justify-end">
-                {useFormStatus ? (
-                  <SubmitButton buttonLabel={buttonLabel} formId={formId} />
-                ) : (
-                  <Button
-                    form={formId}
-                    variant="success"
-                    loading={loading}
-                    onClick={() => onButtonClick?.()}
-                  >
-                    {buttonLabel}
-                  </Button>
+          {(buttonLabel || (error && error.title)) && (
+            <div className="sticky bottom-0 left-0 right-0 bg-white border-t z-10 rounded-b-md">
+              <div className="px-4 py-2 grid gap-3">
+                {error && error.title && (
+                  <Alert title={error.title} variant="emergency">
+                    {error.description}
+                  </Alert>
+                )}
+                {buttonLabel && (
+                  <div className="flex justify-end">
+                    <Button
+                      form={formId}
+                      variant="success"
+                      loading={loading}
+                      onClick={() => onButtonClick?.()}
+                    >
+                      {buttonLabel}
+                    </Button>
+                  </div>
                 )}
               </div>
             </div>
-          </div>
+          )}
         </RadixDialog.Content>
       </RadixDialog.Portal>
     </RadixDialog.Root>
-  );
-}
-
-function SubmitButton({
-  buttonLabel,
-  formId,
-}: {
-  buttonLabel: string;
-  formId?: string;
-}) {
-  const status = useFormStatus();
-
-  return (
-    <Button form={formId} variant="success" loading={status.pending}>
-      {buttonLabel}
-    </Button>
   );
 }

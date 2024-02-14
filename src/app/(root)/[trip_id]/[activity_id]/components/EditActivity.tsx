@@ -11,7 +11,7 @@ export function EditActivity({
   activityImageUrl,
   tripId,
 }: {
-  activity: Tables<"Activites">;
+  activity: Tables<"activites">;
   activityImageUrl: string;
   tripId: number;
 }) {

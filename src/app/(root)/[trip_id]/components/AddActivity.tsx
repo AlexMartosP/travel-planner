@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { PlusIcon } from "lucide-react";
 import { useState } from "react";
 
-export function AddActivity({ tripId }: { tripId: number }) {
+export function AddActivity({ tripId }: { tripId: string }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (

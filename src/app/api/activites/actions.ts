@@ -9,7 +9,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-const activitySchema = z.object<TablesInsert<"Activites">>({
+const activitySchema = z.object<TablesInsert<"activites">>({
   title: z.string(),
   do_date: z.string().optional(),
   description: z.string(),
@@ -19,7 +19,7 @@ const activitySchema = z.object<TablesInsert<"Activites">>({
 const acceptedFiletypes = ["image/jpeg", "image/png"];
 
 export async function addActivity(
-  tripId: number,
+  tripId: string,
   formData: FormData
 ): Promise<TResponse> {
   const fields = activitySchema.safeParse({
@@ -59,38 +59,22 @@ export async function addActivity(
   const imagePath = imageExists ? generateUniqueImagePath(image.type) : null;
 
   const { data: insertedActivity, error: insertError } = await supabase
-    .from("Activites")
+    .from("activites")
     .insert({
       ...fields.data,
       do_date: fields.data.do_date || null,
       image_path: imagePath,
+      trip_id: tripId,
     })
-    .select();
+    .select()
+    .single();
 
   if (insertError) {
-    console.log(insertError);
     return {
       status: "error",
       error: {
         key: "MUTATION_ERROR",
         message: "Could not add activity",
-      },
-    };
-  }
-
-  const { error: insertRelationError } = await supabase
-    .from("trips_activites")
-    .insert({
-      activity: insertedActivity[0].id,
-      trip: tripId,
-    });
-
-  if (insertRelationError) {
-    return {
-      status: "error",
-      error: {
-        key: "MUTATION_ERROR",
-        message: "Could not add relationsship",
       },
     };
   }
@@ -123,7 +107,7 @@ export async function addActivity(
 
 export async function updateActivity(
   activityId: string,
-  tripId: number,
+  tripId: string,
   formData: FormData
 ): Promise<TResponse> {
   const fields = activitySchema.safeParse({
@@ -162,8 +146,8 @@ export async function updateActivity(
 
   const imagePath = imageExists ? generateUniqueImagePath(image.type) : null;
 
-  const { data: insertedActivity, error: insertError } = await supabase
-    .from("Activites")
+  const { error: insertError } = await supabase
+    .from("activites")
     .update({
       ...fields.data,
       do_date: fields.data.do_date || null,
@@ -209,12 +193,12 @@ export async function updateActivity(
 
 export async function deleteActivity(
   activityId: string,
-  tripId: number
+  tripId: string
 ): Promise<TResponse> {
   const supabase = createSupabaseClient(cookies());
 
   const { status } = await supabase
-    .from("Activites")
+    .from("activites")
     .delete()
     .eq("id", activityId);
 
@@ -236,14 +220,14 @@ export async function deleteActivity(
 }
 
 export async function updateDone(
-  tripId: number,
+  tripId: string,
   activityId: string,
   done: boolean
 ): Promise<TResponse> {
   const supabase = createSupabaseClient(cookies());
 
   const { status } = await supabase
-    .from("Activites")
+    .from("activites")
     .update({ done })
     .eq("id", activityId);
 

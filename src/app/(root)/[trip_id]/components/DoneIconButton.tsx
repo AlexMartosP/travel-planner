@@ -10,7 +10,7 @@ export function DoneIconButton({
   activityId,
   initialDone,
 }: {
-  tripId: number;
+  tripId: string;
   activityId: string;
   initialDone: boolean;
 }) {

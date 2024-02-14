@@ -1,6 +1,12 @@
-export function formateDate({ date }: { date: string }) {
+export function formateDate({
+  date,
+  excludeTime,
+}: {
+  date: string;
+  excludeTime?: boolean;
+}) {
   return Intl.DateTimeFormat(undefined, {
     dateStyle: "short",
-    timeStyle: "short",
+    timeStyle: !excludeTime ? "short" : undefined,
   }).format(new Date(date));
 }

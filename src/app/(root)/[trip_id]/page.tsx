@@ -5,18 +5,17 @@ import { getTripWithActivities } from "@/app/api/trips/selections";
 import { formateDate } from "@/utils/formaters";
 import { ArrowLeft, PlaneLandingIcon, PlaneTakeoffIcon } from "lucide-react";
 import Link from "next/link";
+import { notFound } from "next/navigation";
 
 export default async function TripPage({
   params,
-  searchParams,
 }: {
   params: { trip_id: string };
-  searchParams: { activity: string };
 }) {
   const trips = await getTripWithActivities(params.trip_id);
 
   if (trips.status === 404 || !trips.data) {
-    return <div>Not found</div>;
+    notFound();
   }
 
   const trip = trips.data;
@@ -57,7 +56,7 @@ export default async function TripPage({
         </div>
       </div>
       <div className="grid gap-4 mt-12 mb-32">
-        {trip.Activites.map((activity) => (
+        {trip.activites.map((activity) => (
           <ActivityItem
             key={activity.id}
             tripId={trip.id}

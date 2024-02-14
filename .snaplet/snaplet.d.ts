@@ -9,31 +9,6 @@ type Enum_auth_factor_type = 'totp' | 'webauthn';
 type Enum_net_request_status = 'ERROR' | 'PENDING' | 'SUCCESS';
 type Enum_pgsodium_key_status = 'default' | 'expired' | 'invalid' | 'valid';
 type Enum_pgsodium_key_type = 'aead-det' | 'aead-ietf' | 'auth' | 'generichash' | 'hmacsha256' | 'hmacsha512' | 'kdf' | 'secretbox' | 'secretstream' | 'shorthash' | 'stream_xchacha20';
-interface Table_public_activites {
-  id: string;
-  created_at: string;
-  title: string;
-  description: string;
-  do_date: string | null;
-  done: boolean;
-  address: string | null;
-  image_path: string | null;
-}
-interface Table_public_profiles {
-  id: string;
-  created_at: string;
-  email: string;
-  first_name: string;
-  last_name: string;
-}
-interface Table_public_trips {
-  id: number;
-  created_at: string;
-  destination_name: string;
-  start_date: string;
-  end_date: string | null;
-  description: string | null;
-}
 interface Table_net_http_response {
   id: number | null;
   status_code: number | null;
@@ -43,6 +18,17 @@ interface Table_net_http_response {
   timed_out: boolean | null;
   error_msg: string | null;
   created: string;
+}
+interface Table_public_activites {
+  id: string;
+  created_at: string;
+  title: string;
+  description: string | null;
+  do_date: string | null;
+  done: boolean;
+  address: string | null;
+  image_path: string | null;
+  trip_id: string;
 }
 interface Table_auth_audit_log_entries {
   instance_id: string | null;
@@ -108,6 +94,13 @@ interface Table_auth_instances {
   created_at: string | null;
   updated_at: string | null;
 }
+interface Table_public_invitations {
+  id: string;
+  created_at: string;
+  invitee_email: string;
+  trip_id: string;
+  has_expired: boolean;
+}
 interface Table_pgsodium_key {
   id: string;
   status: Enum_pgsodium_key_status | null;
@@ -123,6 +116,60 @@ interface Table_pgsodium_key {
   parent_key: string | null;
   comment: string | null;
   user_data: string | null;
+}
+interface Table_analytics_log_events_33_a_0_d_901_2919_4_c_7_f_a_930_fb_6509_ffb_4_f_0 {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_49_fd_7740_5_f_0_e_4_d_76_a_111_bec_2_cb_816_f_4_f {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_5_b_145942_4_e_9_c_4_ee_9_b_332_95090_d_1_f_7_f_54 {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_9_e_4_c_6565_557_f_45_d_8_9299_0_f_232605_fc_04 {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_a_6_ca_264_b_1_d_32_4_e_92_b_968_f_0_ced_16_dd_8_d_1 {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_ac_0567_f_5_a_9_e_1_4_bd_6_923_c_8_a_08_cea_798_d_6 {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_b_58_f_6986_7002_4_caf_81_ba_7698812_e_07_ca {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_c_102699_a_b_4_c_2_49_b_6_b_3_da_f_2_c_083_e_7_ff_2_e {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
+}
+interface Table_analytics_log_events_f_64970_ad_5_f_71_4_ace_bca_7_bebd_82_ed_2_dd_1 {
+  id: string;
+  body: Json | null;
+  event_message: string | null;
+  timestamp: string | null;
 }
 interface Table_auth_mfa_amr_claims {
   session_id: string;
@@ -170,6 +217,14 @@ interface Table_storage_objects {
   version: string | null;
   owner_id: string | null;
 }
+interface Table_public_profiles {
+  id: string;
+  created_at: string;
+  email: string;
+  first_name: string | null;
+  last_name: string | null;
+  full_name: string | null;
+}
 interface Table_auth_refresh_tokens {
   instance_id: string | null;
   id: number;
@@ -210,6 +265,42 @@ interface Table_supabase_migrations_schema_migrations {
   statements: string[] | null;
   name: string | null;
 }
+interface Table_analytics_schema_migrations_33_a_0_d_901_2919_4_c_7_f_a_930_fb_6509_ffb_4_f_0 {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_49_fd_7740_5_f_0_e_4_d_76_a_111_bec_2_cb_816_f_4_f {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_5_b_145942_4_e_9_c_4_ee_9_b_332_95090_d_1_f_7_f_54 {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_9_e_4_c_6565_557_f_45_d_8_9299_0_f_232605_fc_04 {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_a_6_ca_264_b_1_d_32_4_e_92_b_968_f_0_ced_16_dd_8_d_1 {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_ac_0567_f_5_a_9_e_1_4_bd_6_923_c_8_a_08_cea_798_d_6 {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_b_58_f_6986_7002_4_caf_81_ba_7698812_e_07_ca {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_c_102699_a_b_4_c_2_49_b_6_b_3_da_f_2_c_083_e_7_ff_2_e {
+  version: number;
+  inserted_at: string | null;
+}
+interface Table_analytics_schema_migrations_f_64970_ad_5_f_71_4_ace_bca_7_bebd_82_ed_2_dd_1 {
+  version: number;
+  inserted_at: string | null;
+}
 interface Table_vault_secrets {
   id: string;
   name: string | null;
@@ -246,12 +337,16 @@ interface Table_auth_sso_providers {
   created_at: string | null;
   updated_at: string | null;
 }
-interface Table_public_trips_activites {
-  trip: number;
-  activity: string;
+interface Table_public_trips {
+  id: string;
+  created_at: string;
+  destination_name: string;
+  start_date: string;
+  end_date: string | null;
+  description: string | null;
 }
 interface Table_public_trips_profiles {
-  trip_id: number;
+  trip_id: string;
   profile_id: string;
 }
 interface Table_auth_users {
@@ -290,7 +385,24 @@ interface Table_auth_users {
   deleted_at: string | null;
 }
 interface Schema_analytics {
-
+  log_events_33a0d901_2919_4c7f_a930_fb6509ffb4f0: Table_analytics_log_events_33_a_0_d_901_2919_4_c_7_f_a_930_fb_6509_ffb_4_f_0;
+  log_events_49fd7740_5f0e_4d76_a111_bec2cb816f4f: Table_analytics_log_events_49_fd_7740_5_f_0_e_4_d_76_a_111_bec_2_cb_816_f_4_f;
+  log_events_5b145942_4e9c_4ee9_b332_95090d1f7f54: Table_analytics_log_events_5_b_145942_4_e_9_c_4_ee_9_b_332_95090_d_1_f_7_f_54;
+  log_events_9e4c6565_557f_45d8_9299_0f232605fc04: Table_analytics_log_events_9_e_4_c_6565_557_f_45_d_8_9299_0_f_232605_fc_04;
+  log_events_a6ca264b_1d32_4e92_b968_f0ced16dd8d1: Table_analytics_log_events_a_6_ca_264_b_1_d_32_4_e_92_b_968_f_0_ced_16_dd_8_d_1;
+  log_events_ac0567f5_a9e1_4bd6_923c_8a08cea798d6: Table_analytics_log_events_ac_0567_f_5_a_9_e_1_4_bd_6_923_c_8_a_08_cea_798_d_6;
+  log_events_b58f6986_7002_4caf_81ba_7698812e07ca: Table_analytics_log_events_b_58_f_6986_7002_4_caf_81_ba_7698812_e_07_ca;
+  log_events_c102699a_b4c2_49b6_b3da_f2c083e7ff2e: Table_analytics_log_events_c_102699_a_b_4_c_2_49_b_6_b_3_da_f_2_c_083_e_7_ff_2_e;
+  log_events_f64970ad_5f71_4ace_bca7_bebd82ed2dd1: Table_analytics_log_events_f_64970_ad_5_f_71_4_ace_bca_7_bebd_82_ed_2_dd_1;
+  schema_migrations_33a0d901_2919_4c7f_a930_fb6509ffb4f0: Table_analytics_schema_migrations_33_a_0_d_901_2919_4_c_7_f_a_930_fb_6509_ffb_4_f_0;
+  schema_migrations_49fd7740_5f0e_4d76_a111_bec2cb816f4f: Table_analytics_schema_migrations_49_fd_7740_5_f_0_e_4_d_76_a_111_bec_2_cb_816_f_4_f;
+  schema_migrations_5b145942_4e9c_4ee9_b332_95090d1f7f54: Table_analytics_schema_migrations_5_b_145942_4_e_9_c_4_ee_9_b_332_95090_d_1_f_7_f_54;
+  schema_migrations_9e4c6565_557f_45d8_9299_0f232605fc04: Table_analytics_schema_migrations_9_e_4_c_6565_557_f_45_d_8_9299_0_f_232605_fc_04;
+  schema_migrations_a6ca264b_1d32_4e92_b968_f0ced16dd8d1: Table_analytics_schema_migrations_a_6_ca_264_b_1_d_32_4_e_92_b_968_f_0_ced_16_dd_8_d_1;
+  schema_migrations_ac0567f5_a9e1_4bd6_923c_8a08cea798d6: Table_analytics_schema_migrations_ac_0567_f_5_a_9_e_1_4_bd_6_923_c_8_a_08_cea_798_d_6;
+  schema_migrations_b58f6986_7002_4caf_81ba_7698812e07ca: Table_analytics_schema_migrations_b_58_f_6986_7002_4_caf_81_ba_7698812_e_07_ca;
+  schema_migrations_c102699a_b4c2_49b6_b3da_f2c083e7ff2e: Table_analytics_schema_migrations_c_102699_a_b_4_c_2_49_b_6_b_3_da_f_2_c_083_e_7_ff_2_e;
+  schema_migrations_f64970ad_5f71_4ace_bca7_bebd82ed2dd1: Table_analytics_schema_migrations_f_64970_ad_5_f_71_4_ace_bca_7_bebd_82_ed_2_dd_1;
 }
 interface Schema_realtime {
 
@@ -332,10 +444,10 @@ interface Schema_pgsodium_masks {
 
 }
 interface Schema_public {
-  Activites: Table_public_activites;
-  Profiles: Table_public_profiles;
-  Trips: Table_public_trips;
-  trips_activites: Table_public_trips_activites;
+  activites: Table_public_activites;
+  invitations: Table_public_invitations;
+  profiles: Table_public_profiles;
+  trips: Table_public_trips;
   trips_profiles: Table_public_trips_profiles;
 }
 interface Schema_realtime {
@@ -380,29 +492,12 @@ interface Extension {
   vault: "supabase_vault";
 }
 interface Tables_relationships {
-  "public.Activites": {
+  "public.activites": {
     parent: {
+       activites_trip_id_fkey: "public.trips";
+    };
+    children: {
 
-    };
-    children: {
-       trips_activites_activity_fkey: "public.trips_activites";
-    };
-  };
-  "public.Profiles": {
-    parent: {
-       Profiles_id_fkey: "auth.users";
-    };
-    children: {
-       trips_profiles_profile_id_fkey: "public.trips_profiles";
-    };
-  };
-  "public.Trips": {
-    parent: {
-
-    };
-    children: {
-       trips_activites_trip_fkey: "public.trips_activites";
-       trips_profiles_trip_id_fkey: "public.trips_profiles";
     };
   };
   "storage.buckets": {
@@ -424,6 +519,15 @@ interface Tables_relationships {
   "auth.identities": {
     parent: {
        identities_user_id_fkey: "auth.users";
+    };
+    children: {
+
+    };
+  };
+  "public.invitations": {
+    parent: {
+       invitations_invitee_email_fkey: "public.profiles";
+       invitations_trip_id_fkey: "public.trips";
     };
     children: {
 
@@ -468,6 +572,15 @@ interface Tables_relationships {
     };
     children: {
 
+    };
+  };
+  "public.profiles": {
+    parent: {
+       profiles_id_fkey: "auth.users";
+    };
+    children: {
+       invitations_invitee_email_fkey: "public.invitations";
+       trips_profiles_profile_id_fkey: "public.trips_profiles";
     };
   };
   "auth.refresh_tokens": {
@@ -530,19 +643,20 @@ interface Tables_relationships {
        sso_domains_sso_provider_id_fkey: "auth.sso_domains";
     };
   };
-  "public.trips_activites": {
+  "public.trips": {
     parent: {
-       trips_activites_activity_fkey: "public.Activites";
-       trips_activites_trip_fkey: "public.Trips";
+
     };
     children: {
-
+       activites_trip_id_fkey: "public.activites";
+       invitations_trip_id_fkey: "public.invitations";
+       trips_profiles_trip_id_fkey: "public.trips_profiles";
     };
   };
   "public.trips_profiles": {
     parent: {
-       trips_profiles_profile_id_fkey: "public.Profiles";
-       trips_profiles_trip_id_fkey: "public.Trips";
+       trips_profiles_profile_id_fkey: "public.profiles";
+       trips_profiles_trip_id_fkey: "public.trips";
     };
     children: {
 
@@ -556,7 +670,7 @@ interface Tables_relationships {
        identities_user_id_fkey: "auth.identities";
        mfa_factors_user_id_fkey: "auth.mfa_factors";
        sessions_user_id_fkey: "auth.sessions";
-       Profiles_id_fkey: "public.Profiles";
+       profiles_id_fkey: "public.profiles";
     };
   };
 }
