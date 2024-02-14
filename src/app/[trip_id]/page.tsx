@@ -21,9 +21,6 @@ export default async function TripPage({
   }
 
   const trip = trips.data;
-  const activity = trips.data.Activites.find(
-    (a) => a.id === searchParams.activity
-  );
 
   return (
     <div>
@@ -64,11 +61,7 @@ export default async function TripPage({
         {trip.Activites.map((activity) => (
           <Link
             key={activity.id}
-            href={{
-              query: {
-                activity: activity.id,
-              },
-            }}
+            href={`/${params.trip_id}/${activity.id}`}
             className="flex gap-2 items-center p-2 -ml-2 rounded-md hover:bg-slate-200 transition-all"
           >
             {activity.image_path && (
@@ -89,14 +82,6 @@ export default async function TripPage({
         ))}
       </div>
       <AddActivity tripId={trip.id} />
-      {/* {activity && (
-        <ActivityDrawer
-          tripId={trip.id}
-          activity={activity}
-          open
-          onClose={() => router.push(`/${params.trip_id}`)}
-        />
-      )} */}
     </div>
   );
 }

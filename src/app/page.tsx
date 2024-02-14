@@ -1,3 +1,4 @@
+import { AddTrip } from "@/app/AddTrip";
 import { SignoutButton } from "@/app/SignoutButton";
 import { Button } from "@/components/ui/Button";
 import { createSupabaseClient } from "@/db/client";
@@ -40,15 +41,7 @@ export default async function Home() {
               </span>
             </Link>
           ))}
-          <Button
-            variant="ghost"
-            size="sm"
-            className="mt-2 flex justify-center items-center gap-2"
-            fullwidth
-          >
-            <PlusIcon width={18} />
-            <span className="text-sm">Add new trip</span>
-          </Button>
+          <AddTrip />
         </div>
       </div>
     </div>

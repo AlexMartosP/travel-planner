@@ -7,8 +7,8 @@ import { MoreHorizontalIcon } from "lucide-react";
 export function TripOptions({ trip }: { trip: Tables<"Trips"> }) {
   return (
     <DropdownMenu.Root>
-      <DropdownMenu.Trigger>
-        <button className="p-[2px] bg-slate-500 text-white rounded-full hover:bg-slate-600 transition-all leading-none">
+      <DropdownMenu.Trigger asChild>
+        <button className="p-[2px] bg-slate-200/25 text-slate-800 rounded-full hover:bg-slate-200 transition-all leading-none">
           <MoreHorizontalIcon width={18} height={18} />
         </button>
       </DropdownMenu.Trigger>

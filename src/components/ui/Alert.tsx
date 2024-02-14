@@ -19,7 +19,7 @@ export function Alert({
     <div
       className={twMerge("p-2 rounded-md", variantStyles[variant], className)}
     >
-      <div className="font-medium">{title}</div>
+      <div className="font-medium ">{title}</div>
       {children}
     </div>
   );

@@ -17,4 +17,8 @@ type TResponseError =
   | {
       key: "MUTATION_ERROR";
       message: string;
+    }
+  | {
+      key: "SELECT_ERROR";
+      message: string;
     };

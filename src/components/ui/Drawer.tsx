@@ -46,7 +46,7 @@ export function Drawer({
           <div className="my-4 px-4">{children}</div>
           <div className="sticky bottom-0 left-0 right-0 bg-white border-t z-10">
             <div className="px-4 py-2 grid gap-3">
-              {error && (
+              {error && error.title && (
                 <Alert title={error.title} variant="emergency">
                   {error.description}
                 </Alert>
