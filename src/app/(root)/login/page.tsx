@@ -1,4 +1,4 @@
-import { LoginWithGoogle } from "@/app/login/LoginButtons/LoginWithGoogle";
+import { LoginWithGoogle } from "@/app/(root)/login/LoginButtons/LoginWithGoogle";
 
 export default async function LoginPage() {
   return (

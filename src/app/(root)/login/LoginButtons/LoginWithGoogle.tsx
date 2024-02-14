@@ -1,6 +1,6 @@
 "use client";
 
-import { loginWithGoogle } from "@/app/auth/actions";
+import { loginWithGoogle } from "@/app/api/auth/actions";
 import { Button } from "@/components/ui/Button";
 
 export function LoginWithGoogle() {

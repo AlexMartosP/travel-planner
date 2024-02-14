@@ -1,6 +1,6 @@
 "use client";
 
-import { addActivity, updateActivity } from "@/app/[trip_id]/actions";
+import { addActivity, updateActivity } from "@/app/api/activites/actions";
 import { Drawer } from "@/components/ui/Drawer";
 import { FileUpload } from "@/components/ui/FileUpload";
 import { Input } from "@/components/ui/Input";

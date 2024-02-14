@@ -6,6 +6,7 @@ import { TResponse } from "@/types/response";
 import { generateUniqueImagePath } from "@/utils/filePath";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 const activitySchema = z.object<TablesInsert<"Activites">>({
@@ -200,6 +201,63 @@ export async function updateActivity(
   }
 
   revalidatePath(`/${tripId}/${activityId}`);
+
+  return {
+    status: "success",
+  };
+}
+
+export async function deleteActivity(
+  activityId: string,
+  tripId: number
+): Promise<TResponse> {
+  const supabase = createSupabaseClient(cookies());
+
+  const { status } = await supabase
+    .from("Activites")
+    .delete()
+    .eq("id", activityId);
+
+  if (status === 204) {
+    redirect(`/${tripId}`);
+
+    return {
+      status: "success",
+    };
+  }
+
+  return {
+    status: "error",
+    error: {
+      key: "MUTATION_ERROR",
+      message: "Could not delete activity",
+    },
+  };
+}
+
+export async function updateDone(
+  tripId: number,
+  activityId: string,
+  done: boolean
+): Promise<TResponse> {
+  const supabase = createSupabaseClient(cookies());
+
+  const { status } = await supabase
+    .from("Activites")
+    .update({ done })
+    .eq("id", activityId);
+
+  revalidatePath(`/${tripId}/${activityId}`);
+
+  if (status !== 204) {
+    return {
+      status: "error",
+      error: {
+        key: "MUTATION_ERROR",
+        message: "Could not update done",
+      },
+    };
+  }
 
   return {
     status: "success",

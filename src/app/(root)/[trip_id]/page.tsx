@@ -1,8 +1,7 @@
-// import { ActivityDrawer } from "@/app/[trip_id]/components/ActivityDrawer";
-import { ActivityImage } from "@/app/[trip_id]/components/ActivityImage";
-import { AddActivity } from "@/app/[trip_id]/components/AddActivity";
-import { TripOptions } from "@/app/[trip_id]/components/TripOptions";
-import { getTripWithActivities } from "@/app/[trip_id]/data";
+import { ActivityItem } from "@/app/(root)/[trip_id]/components/ActivityItem";
+import { AddActivity } from "@/app/(root)/[trip_id]/components/AddActivity";
+import { TripOptions } from "@/app/(root)/[trip_id]/components/TripOptions";
+import { getTripWithActivities } from "@/app/api/trips/selections";
 import { formateDate } from "@/utils/formaters";
 import { ArrowLeft, PlaneLandingIcon, PlaneTakeoffIcon } from "lucide-react";
 import Link from "next/link";
@@ -59,26 +58,11 @@ export default async function TripPage({
       </div>
       <div className="grid gap-4 mt-12 mb-32">
         {trip.Activites.map((activity) => (
-          <Link
+          <ActivityItem
             key={activity.id}
-            href={`/${params.trip_id}/${activity.id}`}
-            className="flex gap-2 items-center p-2 -ml-2 rounded-md hover:bg-slate-200 transition-all"
-          >
-            {activity.image_path && (
-              <ActivityImage path={activity.image_path} />
-            )}
-            <div>
-              <h2 className="font-medium">{activity.title}</h2>
-              <p>{activity.description}</p>
-              <div>
-                <span className="text-sm text-slate-400">
-                  {activity.do_date
-                    ? formateDate({ date: activity.do_date })
-                    : "No date"}
-                </span>
-              </div>
-            </div>
-          </Link>
+            tripId={trip.id}
+            activity={activity}
+          />
         ))}
       </div>
       <AddActivity tripId={trip.id} />

@@ -1,6 +1,6 @@
 "use client";
 
-import { deleteActivity } from "@/app/api/activityActions";
+import { deleteActivity } from "@/app/api/activites/actions";
 import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 import { Tables } from "@/db/types";

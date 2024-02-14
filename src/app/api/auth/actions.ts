@@ -10,7 +10,7 @@ export async function loginWithGoogle() {
   const { data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:3000/auth/token",
+      redirectTo: "http://localhost:3000/api/auth/token",
       scopes: "email profile",
     },
   });

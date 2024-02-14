@@ -1,6 +1,6 @@
 "use client";
 
-import { addTrip } from "@/app/api/actions";
+import { addTrip } from "@/app/api/trips/actions";
 import { Button } from "@/components/ui/Button";
 import { Dialog } from "@/components/ui/Dialog";
 import { Input } from "@/components/ui/Input";

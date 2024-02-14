@@ -16,6 +16,7 @@ const variantStyles = {
 const sizeStyles = {
   sm: "py-1 px-3",
   md: "px-10 py-2",
+  icon: "p-1",
 };
 
 export function Button({

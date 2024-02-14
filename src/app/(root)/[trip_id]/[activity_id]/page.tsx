@@ -1,12 +1,12 @@
-import { BannerImage } from "@/app/[trip_id]/[activity_id]/BannerImage";
-import { DeleteActivity } from "@/app/[trip_id]/[activity_id]/DeleteActivity";
-import { EditActivity } from "@/app/[trip_id]/[activity_id]/EditActivity";
-import { getFileUrl } from "@/app/api/getters";
+import { DeleteActivity } from "@/app/(root)/[trip_id]/[activity_id]/components/DeleteActivity";
+import { DoneButton } from "@/app/(root)/[trip_id]/[activity_id]/components/DoneButton";
+import { EditActivity } from "@/app/(root)/[trip_id]/[activity_id]/components/EditActivity";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
+import { getFileUrl } from "@/data/storage";
 import { createSupabaseClient } from "@/db/client";
 import { formateDate } from "@/utils/formaters";
-import { CheckIcon, XIcon } from "lucide-react";
 import { cookies } from "next/headers";
+import Image from "next/image";
 
 export default async function ActivityPage({
   params,
@@ -33,7 +33,7 @@ export default async function ActivityPage({
     return <div>Not found</div>;
   }
 
-  const activityImage =
+  const imageUrl =
     activity.data.image_path &&
     getFileUrl({
       bucket: "activities",
@@ -55,11 +55,16 @@ export default async function ActivityPage({
         ]}
       />
       <div className="mt-4">
-        {activity.data.image_path && (
-          <BannerImage
-            path={activity.data.image_path}
-            alt={activity.data.title}
-          />
+        {imageUrl && (
+          <div className="w-full h-72">
+            <Image
+              className="w-full h-full object-cover rounded-md"
+              src={imageUrl}
+              width={600}
+              height={400}
+              alt={activity.data.title}
+            />
+          </div>
         )}
       </div>
       <h1 className="mt-2">{activity.data.title}</h1>
@@ -70,18 +75,11 @@ export default async function ActivityPage({
             ? formateDate({ date: activity.data.do_date })
             : "No date"}
         </span>
-        <div className="flex gap-1 items-center px-2 py-1 bg-slate-300/50 rounded-full">
-          <div>
-            {activity.data.done ? (
-              <CheckIcon width={13} height={13} />
-            ) : (
-              <XIcon width={13} height={13} />
-            )}
-          </div>
-          <div className="text-xs">
-            {activity.data.done ? "Done" : "Not done"}
-          </div>
-        </div>
+        <DoneButton
+          tripId={trip.data.id}
+          activityId={activity.data.id}
+          initialDone={activity.data.done}
+        />
       </div>
       <span className="text-sm text-slate-500">{activity.data.address}</span>
       <p className="mt-2">{activity.data.description}</p>
@@ -89,7 +87,7 @@ export default async function ActivityPage({
         <EditActivity
           activity={activity.data}
           tripId={trip.data.id}
-          activityImageUrl={activityImage || ""}
+          activityImageUrl={imageUrl || ""}
         />
         <DeleteActivity activity={activity.data} tripId={trip.data.id} />
       </div>
