@@ -31,10 +31,16 @@ export function InvitationDialog({
     >
       <form
         id="invite_form"
-        action={async (formData) => {
+        onSubmit={async (e) => {
+          e.preventDefault();
           setIsLoading(true);
 
-          const response = await sendInvite(tripId, formData);
+          const response = await sendInvite(
+            tripId,
+            new FormData(e.target as HTMLFormElement)
+          );
+
+          console.log(response);
 
           if (response.status === "error") {
             setError("Could not send invitation");
