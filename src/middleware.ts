@@ -67,6 +67,12 @@ export async function middleware(request: NextRequest) {
     }
   }
 
+  if (request.nextUrl.pathname.includes("/api/invitations") && !data.user) {
+    return NextResponse.redirect(
+      new URL(`/login?redirectTo=${request.url}`, request.url)
+    );
+  }
+
   if (!data.user) {
     return NextResponse.redirect(new URL("/login", request.url));
   }
@@ -75,5 +81,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/login", "/((?!api|auth|_next/static|_next/image|favicon.ico).*)"],
+  matcher: ["/login", "/((?!api/auth|_next/static|_next/image|favicon.ico).*)"],
 };

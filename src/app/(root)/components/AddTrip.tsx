@@ -40,7 +40,7 @@ export function AddTrip() {
         onClose={() => setIsOpen(false)}
       >
         <form className="grid gap-4" action={action} id="form">
-          <Input label="Destination" name="destination_name" />
+          <Input label="Destination" name="destination_name" required />
           <div className="flex gap-4 items-center">
             <Radio
               label="Round trip"
@@ -61,6 +61,7 @@ export function AddTrip() {
               type="date"
               className="flex-1"
               name="start_date"
+              required
             />
             {isRoundTrip && (
               <Input

@@ -8,6 +8,7 @@ import { cookies } from "next/headers";
 import { renderAsync } from "@react-email/render";
 import InvitationEmail from "../../../../emails/InvitationEmail";
 import { signOut } from "@/app/api/auth/actions";
+import { inviteeHasAccessToTrip } from "@/app/api/invitations/access";
 
 const invitationSchema = z.object({
   email: z.string().min(1).email(),
@@ -65,13 +66,28 @@ export async function sendInvite(
     };
   }
 
+  const hasAccessToTrip = await inviteeHasAccessToTrip(
+    fields.data.email,
+    tripId
+  );
+
+  if (hasAccessToTrip) {
+    return {
+      status: "error",
+      error: {
+        key: "SELECT_ERROR",
+        message: "User is already a traveler of the trip",
+      },
+    };
+  }
+
   const { data: insertedInvitation, error: insertError } = await supabase
     .from("invitations")
     .insert({
       trip_id: tripId,
       invitee_email: fields.data.email,
     })
-    .select()
+    .select("id")
     .single();
 
   if (insertError) {
@@ -84,21 +100,25 @@ export async function sendInvite(
     };
   }
 
+  const invitationLink = `${process.env.BASE_URL}/api/invitations?invitation_id=${insertedInvitation.id}`;
+
   const emailHtml = await renderAsync(
     <InvitationEmail
       destinationName={trip.destination_name}
       inviterEmail={user.email || ""}
-      link=""
+      link={invitationLink}
     />
   );
 
   const emailResponse = await postmarkClient.sendEmail({
     From: "services@alexmp.dev",
-    To: "services@alexmp.dev", // fields.data.email when approved from postmark
+    To: fields.data.email, // fields.data.email when approved from postmark
     Subject: "Travel planner invitation",
     HtmlBody: emailHtml,
     MessageStream: "outbound",
   });
+
+  console.log(emailResponse);
 
   return {
     status: "success",

@@ -4,13 +4,19 @@ import { createSupabaseClient } from "@/db/client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
-export async function loginWithGoogle() {
+export async function loginWithGoogle(redirectTo?: string) {
   const supabase = createSupabaseClient(cookies());
+
+  const redirectUrl = new URL("http://localhost:3000/api/auth/token");
+
+  if (redirectTo) {
+    redirectUrl.searchParams.append("redirectTo", redirectTo);
+  }
 
   const { data } = await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
-      redirectTo: "http://localhost:3000/api/auth/token",
+      redirectTo: redirectUrl.toString(),
       scopes: "email profile",
     },
   });
@@ -18,12 +24,18 @@ export async function loginWithGoogle() {
   return redirect(data.url!);
 }
 
-export async function signOut() {
+export async function signOut(redirectTo?: string) {
   const supabase = createSupabaseClient(cookies());
 
   const { error } = await supabase.auth.signOut();
 
   if (!error) {
-    return redirect("/login");
+    const loginUrl = new URL(`${process.env.BASE_URL}/login`);
+
+    if (redirectTo) {
+      loginUrl.searchParams.append("redirectTo", redirectTo);
+    }
+
+    return redirect(loginUrl.toString());
   }
 }

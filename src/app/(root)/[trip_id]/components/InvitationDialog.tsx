@@ -1,3 +1,7 @@
+"use client";
+
+import { Test } from "@/app/(root)/[trip_id]/components/Test";
+import { SignoutButton } from "@/app/(root)/components/SignoutButton";
 import { sendInvite } from "@/app/api/invitations/actions";
 import { Alert } from "@/components/ui/Alert";
 import { Dialog } from "@/components/ui/Dialog";
@@ -54,6 +58,7 @@ export function InvitationDialog({
       >
         <Input label="Email*" type="email" name="email" required />
       </form>
+      <Test />
       {sentInvite && (
         <Alert title="Invitation is sent" variant="success" className="mt-4">
           An email has been sent to the invitee

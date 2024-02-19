@@ -13,7 +13,7 @@ export function EditActivity({
 }: {
   activity: Tables<"activites">;
   activityImageUrl: string;
-  tripId: number;
+  tripId: string;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 

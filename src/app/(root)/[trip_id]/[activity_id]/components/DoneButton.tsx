@@ -9,7 +9,7 @@ export function DoneButton({
   activityId,
   initialDone,
 }: {
-  tripId: number;
+  tripId: string;
   activityId: string;
   initialDone: boolean;
 }) {

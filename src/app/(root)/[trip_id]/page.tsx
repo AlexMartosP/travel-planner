@@ -1,6 +1,7 @@
 import { ActivityItem } from "@/app/(root)/[trip_id]/components/ActivityItem";
 import { AddActivity } from "@/app/(root)/[trip_id]/components/AddActivity";
 import { TripOptions } from "@/app/(root)/[trip_id]/components/TripOptions";
+import { currentUserHasAccessToTrip } from "@/app/api/trips/access";
 import { getTripWithActivities } from "@/app/api/trips/selections";
 import { formateDate } from "@/utils/formaters";
 import { ArrowLeft, PlaneLandingIcon, PlaneTakeoffIcon } from "lucide-react";
@@ -12,6 +13,12 @@ export default async function TripPage({
 }: {
   params: { trip_id: string };
 }) {
+  const hasAccess = await currentUserHasAccessToTrip(params.trip_id);
+
+  if (!hasAccess) {
+    return notFound();
+  }
+
   const trips = await getTripWithActivities(params.trip_id);
 
   if (trips.status === 404 || !trips.data) {

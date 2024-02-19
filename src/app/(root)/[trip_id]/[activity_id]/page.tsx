@@ -1,6 +1,7 @@
 import { DeleteActivity } from "@/app/(root)/[trip_id]/[activity_id]/components/DeleteActivity";
 import { DoneButton } from "@/app/(root)/[trip_id]/[activity_id]/components/DoneButton";
 import { EditActivity } from "@/app/(root)/[trip_id]/[activity_id]/components/EditActivity";
+import { currentUserHasAccessToTrip } from "@/app/api/trips/access";
 import { Breadcrumbs } from "@/components/ui/Breadcrumbs";
 import { getFileUrl } from "@/data/storage";
 import { createSupabaseClient } from "@/db/client";
@@ -14,6 +15,12 @@ export default async function ActivityPage({
 }: {
   params: { trip_id: string; activity_id: string };
 }) {
+  const hasAccess = await currentUserHasAccessToTrip(params.trip_id);
+
+  if (!hasAccess) {
+    return notFound();
+  }
+
   const supabase = createSupabaseClient(cookies());
 
   // Promise.all
