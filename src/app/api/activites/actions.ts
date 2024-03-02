@@ -1,7 +1,6 @@
 "use server";
 
 import { createSupabaseClient } from "@/db/client";
-import { TablesInsert } from "@/db/types";
 import { TResponse } from "@/types/response";
 import { generateUniqueImagePath } from "@/utils/filePath";
 import { revalidatePath } from "next/cache";
@@ -9,11 +8,11 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 
-const activitySchema = z.object<TablesInsert<"activites">>({
+const activitySchema = z.object({
   title: z.string(),
-  do_date: z.string().optional(),
+  do_date: z.string(),
   description: z.string(),
-  address: z.string().optional(),
+  address: z.string(),
 });
 
 const acceptedFiletypes = ["image/jpeg", "image/png"];
@@ -87,7 +86,6 @@ export async function addActivity(
       });
 
     if (storageError) {
-      console.log(storageError);
       return {
         status: "error",
         error: {
@@ -144,14 +142,22 @@ export async function updateActivity(
 
   const supabase = createSupabaseClient(cookies());
 
+  const { data: activity } = await supabase
+    .from("activites")
+    .select("image_path")
+    .eq("id", activityId)
+    .single();
+
   const imagePath = imageExists ? generateUniqueImagePath(image.type) : null;
+
+  console.log(fields);
 
   const { error: insertError } = await supabase
     .from("activites")
     .update({
       ...fields.data,
       do_date: fields.data.do_date || null,
-      image_path: imagePath,
+      ...(imagePath && { image_path: imagePath }),
     })
     .eq("id", activityId);
 
@@ -170,7 +176,6 @@ export async function updateActivity(
       .from("activities")
       .upload(imagePath, image, {
         contentType: "image/*",
-        upsert: true,
       });
 
     if (storageError) {
@@ -181,6 +186,18 @@ export async function updateActivity(
           message: "Could not add image",
         },
       };
+    }
+
+    if (activity?.image_path) {
+      const { error: removeFileError } = await supabase.storage
+        .from("activities")
+        .remove([activity.image_path]);
+
+      if (removeFileError) {
+        // Silent error, should log
+        // eslint-disable-next-line no-console
+        console.log("Could not remove old image");
+      }
     }
   }
 

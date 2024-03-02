@@ -1,10 +1,12 @@
 import { ZodError, z } from "zod";
 
 export const zodEnv = z.object({
-  DB_API_URL: z.string(),
-  DB_KEY: z.string(),
+  SUPABASE_URL: z.string(),
+  SUPABASE_ANON_KEY: z.string(),
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
+  POSTMARK_SERVER_API_TOKEN: z.string(),
+  BASE_URL: z.string(),
 });
 
 try {

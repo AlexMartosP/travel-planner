@@ -8,5 +8,6 @@ export function formateDate({
   return Intl.DateTimeFormat(undefined, {
     dateStyle: "short",
     timeStyle: !excludeTime ? "short" : undefined,
+    timeZone: "utc",
   }).format(new Date(date));
 }

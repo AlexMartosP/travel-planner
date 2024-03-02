@@ -21,8 +21,6 @@ export function InvitationForm({ tripId }: { tripId: string }) {
           new FormData(e.target as HTMLFormElement)
         );
 
-        console.log(response);
-
         if (response.status === "error") {
           setError("Could not send invitation");
         } else {

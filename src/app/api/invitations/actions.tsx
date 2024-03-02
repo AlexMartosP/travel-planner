@@ -110,15 +110,13 @@ export async function sendInvite(
     />
   );
 
-  const emailResponse = await postmarkClient.sendEmail({
+  await postmarkClient.sendEmail({
     From: "services@alexmp.dev",
     To: fields.data.email, // fields.data.email when approved from postmark
     Subject: "Travel planner invitation",
     HtmlBody: emailHtml,
     MessageStream: "outbound",
   });
-
-  console.log(emailResponse);
 
   return {
     status: "success",

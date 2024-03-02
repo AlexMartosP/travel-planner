@@ -44,6 +44,7 @@ export async function GET(request: NextRequest) {
 
       if (updateError) {
         // Silent error and log
+        // eslint-disable-next-line no-console
         console.log(updateError);
       }
 

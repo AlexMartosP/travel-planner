@@ -15,13 +15,15 @@ export default async function Home() {
     .from("trips")
     .select("*, profiles!inner(*)")
     .eq("profiles.id", data.user!.id)
-    .gte("start_date", new Date().toISOString());
+    .gte("start_date", new Date().toISOString())
+    .order("start_date", { ascending: true });
 
   const previousTrips = await supabase
     .from("trips")
     .select("*, profiles!inner(*)")
     .eq("profiles.id", data.user!.id)
-    .lt("start_date", new Date().toISOString());
+    .lt("start_date", new Date().toISOString())
+    .order("start_date", { ascending: false });
 
   return (
     <div className="pt-32">

@@ -125,7 +125,7 @@ export function ActivityDrawer({
           defaultValue={activity?.address || undefined}
         />
         <Textarea
-          label="Description*"
+          label="Description"
           name="description"
           defaultValue={activity?.description || undefined}
         />

@@ -29,7 +29,7 @@ export default async function ActivityPage({
     .select("destination_name, id")
     .eq("id", params.trip_id)
     .single();
-  console.log(trip);
+
   const activity = await supabase
     .from("activites")
     .select("*")
@@ -72,7 +72,7 @@ export default async function ActivityPage({
             <Image
               className="w-full h-full object-cover rounded-md"
               src={imageUrl}
-              width={600}
+              width={1000}
               height={400}
               alt={activity.data.title}
             />

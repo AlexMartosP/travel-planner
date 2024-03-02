@@ -63,13 +63,17 @@ export default async function TripPage({
         </div>
       </div>
       <div className="grid gap-4 mt-12 mb-32">
-        {trip.activites.map((activity) => (
-          <ActivityItem
-            key={activity.id}
-            tripId={trip.id}
-            activity={activity}
-          />
-        ))}
+        {trip.activites.length > 0 ? (
+          trip.activites.map((activity) => (
+            <ActivityItem
+              key={activity.id}
+              tripId={trip.id}
+              activity={activity}
+            />
+          ))
+        ) : (
+          <p>No activites yet</p>
+        )}
       </div>
       <AddActivity tripId={trip.id} />
     </div>

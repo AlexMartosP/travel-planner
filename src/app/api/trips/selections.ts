@@ -9,6 +9,11 @@ export const getTripWithActivities = cache(async (tripId: string) => {
     .from("trips")
     .select("*, activites(*)")
     .eq("id", tripId)
+    .order("do_date", {
+      referencedTable: "activites",
+      ascending: true,
+      nullsFirst: false,
+    })
     .single();
 
   return {
