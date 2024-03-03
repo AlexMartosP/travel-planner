@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  pull-requests: write
+
+jobs:
+  build_test:
+    name: "Build and test"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup
+        run: actions/setup-node@v4
+      - name: "Checkout repository"
+        run: actions/checkout@v4
+      - name: "Lint check"
+        run: npm run lint
+      - name: Build
+        run: npm run build
+
+  dependabot:
+    name: "Dependabot auto merge"
+    if: github.actor == 'dependabot[bot]'
+    needs: [build_test]
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Approve PR"
+        run: gh pr review --approve
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: "Auto-merge PR"
+        run: gh pr merge --auto -s
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
