@@ -6,8 +6,7 @@ export const zodEnv = z.object({
   GOOGLE_CLIENT_ID: z.string(),
   GOOGLE_CLIENT_SECRET: z.string(),
   POSTMARK_SERVER_API_TOKEN: z.string(),
-  VERCEL_URL: z.string(),
-  VERCEL_ENV: z.string(),
+  SITE_URL: z.string(),
 });
 
 try {

@@ -1,6 +1,6 @@
 "use server";
 
-import { baseUrl } from "@/constants/href";
+import { getBaseURL } from "@/constants/href";
 import { createSupabaseClient } from "@/db/client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export async function loginWithGoogle(redirectTo?: string) {
   const supabase = createSupabaseClient(cookies());
 
-  const redirectUrl = new URL(`${baseUrl}/api/auth/token`);
+  const redirectUrl = new URL(`${getBaseURL()}/api/auth/token`);
 
   if (redirectTo) {
     redirectUrl.searchParams.append("redirectTo", redirectTo);
@@ -31,7 +31,7 @@ export async function signOut(redirectTo?: string) {
   const { error } = await supabase.auth.signOut();
 
   if (!error) {
-    const loginUrl = new URL(`${baseUrl}/login`);
+    const loginUrl = new URL(`${getBaseURL()}/login`);
 
     if (redirectTo) {
       loginUrl.searchParams.append("redirectTo", redirectTo);
