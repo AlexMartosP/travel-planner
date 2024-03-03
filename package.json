@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@snaplet/copycat": "^2.0.0",
-    "@snaplet/seed": "^0.84.0",
+    "@snaplet/seed": "^0.87.3",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
@@ -45,7 +45,7 @@
     "eslint-config-next": "14.1.0",
     "eslint-plugin-unused-imports": "^3.0.0",
     "postcss": "^8",
-    "snaplet": "^0.84.0",
+    "snaplet": "^0.89.4",
     "supabase": "^1.145.4",
     "tailwindcss": "^3.3.0",
     "ts-node": "^10.9.2",
