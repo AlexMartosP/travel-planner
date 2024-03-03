@@ -1,5 +1,6 @@
 "use server";
 
+import { baseUrl } from "@/constants/href";
 import { createSupabaseClient } from "@/db/client";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -30,7 +31,7 @@ export async function signOut(redirectTo?: string) {
   const { error } = await supabase.auth.signOut();
 
   if (!error) {
-    const loginUrl = new URL(`${process.env.BASE_URL}/login`);
+    const loginUrl = new URL(`${baseUrl}/login`);
 
     if (redirectTo) {
       loginUrl.searchParams.append("redirectTo", redirectTo);

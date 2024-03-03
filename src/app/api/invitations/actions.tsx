@@ -9,6 +9,7 @@ import { renderAsync } from "@react-email/render";
 import InvitationEmail from "../../../../emails/InvitationEmail";
 import { signOut } from "@/app/api/auth/actions";
 import { inviteeHasAccessToTrip } from "@/app/api/invitations/access";
+import { baseUrl } from "@/constants/href";
 
 const invitationSchema = z.object({
   email: z.string().min(1).email(),
@@ -100,7 +101,7 @@ export async function sendInvite(
     };
   }
 
-  const invitationLink = `${process.env.BASE_URL}/api/invitations?invitation_id=${insertedInvitation.id}`;
+  const invitationLink = `${baseUrl}/api/invitations?invitation_id=${insertedInvitation.id}`;
 
   const emailHtml = await renderAsync(
     <InvitationEmail
