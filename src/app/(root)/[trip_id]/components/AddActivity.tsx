@@ -12,7 +12,7 @@ export function AddActivity({ tripId }: { tripId: string }) {
     <div>
       <div className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-2">
         <Button
-          className="bg-slate-900 text-white py-3 px-4 rounded-full flex gap-2 items-center"
+          className="bg-slate-900 hover:bg-slate-700 text-white py-3 px-4 rounded-full flex gap-2 items-center"
           onClick={() => setIsOpen(true)}
         >
           <PlusIcon width={20} height={20} />

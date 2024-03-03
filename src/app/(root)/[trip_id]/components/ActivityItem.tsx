@@ -16,7 +16,7 @@ export function ActivityItem({
     activity.image_path &&
     getFileUrl({
       bucket: "activities",
-      filePath: activity.image_path,
+      filePath: `${activity.id}/${activity.image_path}`,
     });
 
   return (

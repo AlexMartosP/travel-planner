@@ -1,8 +1,8 @@
 "use server";
 
+import { generateActivityImagePath } from "@/app/api/activites/utils";
 import { createSupabaseClient } from "@/db/client";
 import { TResponse } from "@/types/response";
-import { generateUniqueImagePath } from "@/utils/filePath";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
@@ -55,17 +55,17 @@ export async function addActivity(
 
   const supabase = createSupabaseClient(cookies());
 
-  const imagePath = imageExists ? generateUniqueImagePath(image.type) : null;
+  const imagePath = imageExists ? generateActivityImagePath(image.type) : null;
 
   const { data: insertedActivity, error: insertError } = await supabase
     .from("activites")
     .insert({
       ...fields.data,
       do_date: fields.data.do_date || null,
-      image_path: imagePath,
+      ...(imagePath && { image_path: imagePath }),
       trip_id: tripId,
     })
-    .select()
+    .select("id")
     .single();
 
   if (insertError) {
@@ -81,7 +81,7 @@ export async function addActivity(
   if (imagePath && image) {
     const { error: storageError } = await supabase.storage
       .from("activities")
-      .upload(imagePath, image, {
+      .upload(`${insertedActivity.id}/${imagePath}`, image, {
         contentType: "image/*",
       });
 
@@ -148,9 +148,7 @@ export async function updateActivity(
     .eq("id", activityId)
     .single();
 
-  const imagePath = imageExists ? generateUniqueImagePath(image.type) : null;
-
-  console.log(fields);
+  const imagePath = imageExists ? generateActivityImagePath(image.type) : null;
 
   const { error: insertError } = await supabase
     .from("activites")
@@ -174,7 +172,7 @@ export async function updateActivity(
   if (imagePath && image) {
     const { error: storageError } = await supabase.storage
       .from("activities")
-      .upload(imagePath, image, {
+      .upload(`${activityId}/${imagePath}`, image, {
         contentType: "image/*",
       });
 
@@ -191,7 +189,7 @@ export async function updateActivity(
     if (activity?.image_path) {
       const { error: removeFileError } = await supabase.storage
         .from("activities")
-        .remove([activity.image_path]);
+        .remove([`${activityId}/${activity.image_path}`]);
 
       if (removeFileError) {
         // Silent error, should log
@@ -213,6 +211,23 @@ export async function deleteActivity(
   tripId: string
 ): Promise<TResponse> {
   const supabase = createSupabaseClient(cookies());
+
+  const { data: files } = await supabase.storage
+    .from("activities")
+    .list(activityId);
+
+  if (files) {
+    for (let file of files) {
+      const { error: removeFileError } = await supabase.storage
+        .from("activities")
+        .remove([`${activityId}/${file.name}`]);
+
+      if (removeFileError) {
+        // eslint-disable-next-line no-console
+        console.log("Error while removing file");
+      }
+    }
+  }
 
   const { status } = await supabase
     .from("activites")

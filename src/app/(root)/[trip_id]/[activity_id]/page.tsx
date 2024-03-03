@@ -49,7 +49,7 @@ export default async function ActivityPage({
     activity.data.image_path &&
     getFileUrl({
       bucket: "activities",
-      filePath: activity.data.image_path,
+      filePath: `${activity.data.id}/${activity.data.image_path}`,
     });
 
   return (
