@@ -6,6 +6,7 @@ on:
       - main
 
 permissions:
+  contents: write
   pull-requests: write
 
 jobs:
@@ -30,16 +31,22 @@ jobs:
 
   dependabot:
     name: "Dependabot auto merge"
-    if: github.actor == 'dependabot[bot]'
+    # if: github.actor == 'dependabot[bot]'
     needs: [build_test]
     runs-on: ubuntu-latest
     steps:
       - name: "Approve PR"
         run: gh pr review --approve ${{ env.PR_URL }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN_ALEXANDER }}
           PR_URL: ${{ github.event.pull_request.html_url }}
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
       - name: "Auto-merge PR"
+        if: steps.metadata.outputs.update-type != 'version-update:semver-major'
         run: gh pr merge --auto -s ${{ env.PR_URL }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
