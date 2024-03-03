@@ -38,7 +38,7 @@ jobs:
       - name: "Approve PR"
         run: gh pr review --approve ${{ env.PR_URL }}
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN_ALEXANDER }}
           PR_URL: ${{ github.event.pull_request.html_url }}
       - name: Dependabot metadata
         id: metadata
