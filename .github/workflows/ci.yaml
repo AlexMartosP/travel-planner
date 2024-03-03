@@ -31,7 +31,7 @@ jobs:
 
   dependabot:
     name: "Dependabot auto merge"
-    # if: github.actor == 'dependabot[bot]'
+    if: github.actor == 'dependabot[bot]'
     needs: [build_test]
     runs-on: ubuntu-latest
     steps:
