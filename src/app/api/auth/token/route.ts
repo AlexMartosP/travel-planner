@@ -14,9 +14,6 @@ export async function GET(request: Request) {
 
     const { error } = await supabase.auth.exchangeCodeForSession(code);
 
-    console.log("In auth route");
-    console.log(error);
-
     if (!error) {
       if (redirectTo) {
         return NextResponse.redirect(redirectTo);

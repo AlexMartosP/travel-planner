@@ -56,7 +56,6 @@ export async function middleware(request: NextRequest) {
   const { data, error } = await supabase.auth.getUser();
 
   if (error) {
-    console.log(error);
     await supabase.auth.signOut();
   }
 
