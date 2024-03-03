@@ -8,7 +8,7 @@ import { redirect } from "next/navigation";
 export async function loginWithGoogle(redirectTo?: string) {
   const supabase = createSupabaseClient(cookies());
 
-  const redirectUrl = new URL("http://localhost:3000/api/auth/token");
+  const redirectUrl = new URL(`${baseUrl}/api/auth/token`);
 
   if (redirectTo) {
     redirectUrl.searchParams.append("redirectTo", redirectTo);
